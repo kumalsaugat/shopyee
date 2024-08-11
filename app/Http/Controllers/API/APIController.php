@@ -57,44 +57,106 @@ class APIController extends Controller
     }
 
     //For Login
-    public function login(Request $request)
-    {
+    // public function login(Request $request)
+    // {
 
-        $credentials = $request->only('email', 'password');
+    //     $credentials = $request->only('email', 'password');
 
-		$user = User::where('email', $credentials['email'])->first();
+	// 	$user = User::where('email', $credentials['email'])->first();
 
-        try {
+    //     try {
             
-            if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['message' => 'invalid_credentials'], 400);
-            }
-        } catch (JWTException $e) {
+    //         if (! $token = JWTAuth::attempt($credentials)) {
+    //             return response()->json(['message' => 'invalid_credentials'], 400);
+    //         }
+    //     } catch (JWTException $e) {
             
-            return response()->json(['message' => 'could_not_create_token'], 500);
-        }
+    //         return response()->json(['message' => 'could_not_create_token'], 500);
+    //     }
 
 
-		$token = JWTAuth::fromUser($user);
+	// 	$token = JWTAuth::fromUser($user);
 
-		$refreshToken = $token; 
+	// 	$refreshToken = $token; 
 
-		return response()->json([
-			'success' => true,
-			'message' => 'User logged in successfully',
-			'token' => $token,
-			'refresh' => $refreshToken,
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
-			'user' => [
-				'id' => $user->id,
-				'email' => $user->email,
-				'name' => $user->name,
-			],
-		]);
+	// 	return response()->json([
+	// 		'success' => true,
+	// 		'message' => 'User logged in successfully',
+	// 		'token' => $token,
+	// 		'refresh' => $refreshToken,
+    //         'expires_in' => auth('api')->factory()->getTTL() * 60,
+	// 		'user' => [
+	// 			'id' => $user->id,
+	// 			'email' => $user->email,
+	// 			'name' => $user->name,
+	// 		],
+	// 	]);
 
         
 
+    // }
+
+    public function login(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        $key = 'login_attempts_' . $request->ip();
+
+        if (Cache::has($key) && Cache::get($key) >= 3) {
+            $timeLeft = now()->diffInSeconds(Cache::get($key . '_time')) ?: 60; 
+            return response()->json([
+                'message' => 'Too many login attempts. Please try again in ' . gmdate('i:s', $timeLeft) . ' minutes.',
+                'attempts' => Cache::get($key),
+                'time_left' => gmdate('i:s', $timeLeft)
+            ], 429);
+        }
+
+        $user = User::where('email', $credentials['email'])->first();
+
+        try {
+            if (! $token = JWTAuth::attempt($credentials)) {
+                $attempts = Cache::increment($key);
+                if ($attempts >= 3) {
+                    Cache::put($key . '_time', now()->addMinutes(), 60); 
+                }
+                Cache::put($key, $attempts, 60); 
+
+                return response()->json([
+                    'message' => 'Invalid credentials',
+                    'attempts' => $attempts,
+                    'time_left' => $attempts >= 3 ? '01:00' : null 
+                ], 400);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['message' => 'Could not create token'], 500);
+        }
+
+        Cache::forget($key);
+        Cache::forget($key . '_time');
+
+        $token = JWTAuth::fromUser($user);
+        $refreshToken = $token;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User logged in successfully',
+            'token' => $token,
+            'refresh' => $refreshToken,
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'user' => [
+                'id' => $user->id,
+                'email' => $user->email,
+                'name' => $user->name,
+            ],
+        ]);
     }
+
+
 
     public function profile()
     {
