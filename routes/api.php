@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\API\APIController;
 
 
 /*
@@ -24,16 +24,13 @@ use App\Http\Controllers\Auth\AuthController;
 Route::group([ 'middleware' => 'api'], function ($router) {
 
 
-    Route::post('register', [AuthController::class,'register']);
-    Route::post('login', [ AuthController::class,'login']);
-    Route::get('profile', [AuthController::class,'profile']);
-    Route::post('refresh', [AuthController::class,'refresh']);
-    Route::post('logout', [AuthController::class,'logout']);
-    Route::get('checktoken', [AuthController::class,'checkToken']);
-    Route::post('/update-profile', [AuthController::class,'uploadImageProfile']);
-
-
-
+    Route::post('register', [APIController::class,'register']);
+    Route::post('login', [ APIController::class,'login']);
+    Route::get('profile', [APIController::class,'profile']);
+    Route::post('refresh', [APIController::class,'refresh']);
+    Route::post('logout', [APIController::class,'logout']);
+    Route::get('checktoken', [APIController::class,'checkToken']);
+    Route::post('/update-profile', [APIController::class,'uploadImageProfile']);
 
 
 });
