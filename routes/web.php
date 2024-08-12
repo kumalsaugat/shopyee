@@ -19,3 +19,5 @@ Route::get('/', function () {
 
 
 Route::get('/admin/dashboard',[App\Http\Controllers\Admin\DashboardController::class, 'dashboard'])->name('admin.dashboard');
+
+Route::get('/admin/login',[App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('admin.login');
