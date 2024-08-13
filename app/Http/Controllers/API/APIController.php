@@ -38,7 +38,6 @@ class APIController extends Controller
 			], 400);
 		}
 
-        // $userCheck = User::where('mobile', '+977'.$request->phone)->first();
 
         $user = User::create([
             'name' => $request->name,

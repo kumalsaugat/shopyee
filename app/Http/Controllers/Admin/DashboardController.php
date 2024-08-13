@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -11,5 +12,11 @@ class DashboardController extends Controller
     {
        
         return view('admin.dashboard.index');
+    }
+
+    public function logout(){
+        
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.login');
     }
 }
