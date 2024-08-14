@@ -7,6 +7,11 @@
   <title>Modernize Free</title>
   <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
   <link rel="stylesheet" href="{{asset('assets/css/styles.min.css')}}" />
+
+  <!-- Dropzone -->
+  <link rel="stylesheet" href="{{asset('assets/plugins/dropzone/min/dropzone.min.css')}}" />
+  
+
 </head>
 
 <body>
@@ -41,6 +46,11 @@
   <script src="{{asset('assets/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
   <script src="{{asset('assets/libs/simplebar/dist/simplebar.js')}}"></script>
   <script src="{{asset('assets/js/dashboard.js')}}"></script>
+
+  <!-- Dropzone -->
+  <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}" />
+
+  @yield('Customjs')
 </body>
 
 </html>

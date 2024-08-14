@@ -1,7 +1,7 @@
 <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
           <a href="{{ route('admin.dashboard')}}" class="text-nowrap logo-img">
-            <img src="../assets/images/logos/logo1.png" width="60" height="60" alt="" /><span class="hide-menu"><strong style="letter-spacing:3px;">SHOPYEE</strong></span>
+            <img src="{{asset('assets/images/logos/logo1.png')}}" width="60" height="60" alt="" /><span class="hide-menu"><strong style="letter-spacing:3px;">SHOPYEE</strong></span>
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
             <i class="ti ti-x fs-8"></i>

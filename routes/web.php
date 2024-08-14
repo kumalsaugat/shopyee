@@ -33,6 +33,8 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('/logout',[App\Http\Controllers\Admin\DashboardController::class, 'logout'])->name('admin.logout');
 
 
+        Route::resource('/upload-image', \App\Http\Controllers\Admin\UploadImageController::class);
+
 
     });
 });
