@@ -35,6 +35,13 @@ Route::group(['prefix' => 'admin'], function() {
 
         Route::resource('/upload-image', \App\Http\Controllers\Admin\UploadImageController::class);
 
+       
+
+
+        //product
+        Route::resource('/product', \App\Http\Controllers\Admin\ProductController::class);
+
+
 
     });
 });

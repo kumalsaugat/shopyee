@@ -9,8 +9,12 @@
   <link rel="stylesheet" href="{{asset('assets/css/styles.min.css')}}" />
 
   <!-- Dropzone -->
-  <link rel="stylesheet" href="{{asset('assets/plugins/dropzone/min/dropzone.min.css')}}" />
+  <!-- <link rel="stylesheet" href="{{asset('assets/plugins/dropzone/min/dropzone.min.css')}}" /> -->
   
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
+
+
 
 </head>
 
@@ -48,7 +52,9 @@
   <script src="{{asset('assets/js/dashboard.js')}}"></script>
 
   <!-- Dropzone -->
-  <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}" />
+  <!-- <script src="{{asset('assets/plugins/dropzone/min/dropzone.min.js')}}" /> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 
   @yield('Customjs')
 </body>

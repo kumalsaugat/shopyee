@@ -5,12 +5,13 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title fw-semibold mb-4">Upload Image</h5>
+        <h5 class="card-title fw-semibold mb-4">Update Image</h5>
 
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('upload-image.store') }}" method="POST" class="dropzone" id="imageDropzone">
+                <form action="{{ route('upload-image.update', $uploadImage->id) }}" method="POST" class="dropzone" id="imageDropzone">
                     @csrf
+                    @method('PUT') 
                     <div class="mb-3">
                         <label for="image" class="form-label">Image</label>
                         <div id="image" class="dropzone dz-clickable">
@@ -20,11 +21,10 @@
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
         </div>
-
 
       </div>
     </div>
@@ -37,7 +37,7 @@
 <script>
     Dropzone.options.imageDropzone = {
         
-        paramName: "image", // The name that will be used to transfer the file
+        paramName: "image", 
         maxFilesize: 2, // MB
         acceptedFiles: ".jpeg,.jpg,.png,.gif",
         addRemoveLinks: true,
